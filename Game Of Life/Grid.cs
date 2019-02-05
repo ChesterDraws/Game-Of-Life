@@ -27,6 +27,17 @@ namespace Game_Of_Life
 
         }
 
+
+        public void Iterate()
+        {
+            Console.Clear();
+            Process_Grid_Iteration();
+            _iteration_number++;
+            Console.WriteLine(Draw_Grid());
+            Console.WriteLine("Iteration Number: " + _iteration_number);
+        }
+
+
         private void Create_Grid()
         {
             this._cells = new Cell[this._grid_size, this._grid_size];
@@ -68,40 +79,26 @@ namespace Game_Of_Life
 
         }
 
-
-
-
-        public void Iterate()
-        {
-            Console.Clear();
-            //Console.SetCursorPosition(Console.CursorLeft,Console.WindowTop + Console.WindowHeight -1);
-
-            Process_Grid_Iteration();
-            _iteration_number++;
-            Draw_Grid();
-
-            Console.WriteLine("Iteration Number: " + _iteration_number);
-        }
-
         private void Process_Grid_Iteration()
         {
             Grid temp_grid = Copy_Cells();
 
             for (int i = 0; i < _grid_size; i++)
             {
-
                 for (int j = 0; j < _grid_size; j++)
                 {
                     int y = Calculate_Cell_Neighbours(_cells[i, j]);
-
                     Determine_Cell_Action(temp_grid._cells[i, j], y);
-
                 }
-
             }
             this._cells = temp_grid._cells;
         }
 
+        /// <summary>
+        /// Copys the cells from one Grid object to another.
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private Grid Copy_Cells()
         {
             Grid temp = new Grid(0);
@@ -117,12 +114,29 @@ namespace Game_Of_Life
             return temp;
         }
 
+
+
+        /// <summary>
+        /// Checks where or not a position is within the grid
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         private bool InBounds(int x, int y)
         {
             return x >= 0 && y >= 0 && x < _grid_size && y < _grid_size;
 
         }
 
+
+
+        /// <summary>
+        /// Calculates the number of a neighbours a given cell has
+        /// 
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
         private int Calculate_Cell_Neighbours(Cell cell)
         {
             int neighbours = 0;
@@ -147,24 +161,30 @@ namespace Game_Of_Life
             return neighbours;
         }
 
-        private void Draw_Grid()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private String Draw_Grid()
         {
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < this._grid_size; i++)
             {
                 for (int j = 0; j < this._grid_size; j++)
                 {
                     if (this._cells[i, j].Is_Cell_Alive())
                     {
-                        Console.Write("[+]");
+                        sb.Append("[+]");
                     }
                     else
                     {
-                        Console.Write("[ ]");
+                        sb.Append("[ ]");
 
                     }
                 }
-                Console.WriteLine();
+                sb.Append(Environment.NewLine);
             }
+            return sb.ToString();
         }
 
         private void Determine_Cell_Action(Cell cell, int neighbours)
