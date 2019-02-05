@@ -6,15 +6,15 @@ namespace Game_Of_Life
 {
     class Grid
     {
-        private static int ITERATION_NUMBER;
+        private int _iteration_number;
         private Cell[,] _cells;
-        public int _grid_size { get; }
+        private int _grid_size;
 
 
         public Grid(int grid_size, int initial_live_cells)
-        { 
+        {
 
-            ITERATION_NUMBER = 0;
+            _iteration_number = 0;
             if (initial_live_cells > grid_size * grid_size)
                 initial_live_cells = grid_size * grid_size;
 
@@ -48,6 +48,7 @@ namespace Game_Of_Life
                 Position_At_Random();
             }
         }
+
         private void Position_At_Random()
         {
             Random rnd = new Random();
@@ -71,19 +72,12 @@ namespace Game_Of_Life
         public void Iterate()
         {
             Console.Clear();
-            if (ITERATION_NUMBER == 0)
-            {
-                ITERATION_NUMBER++;
 
-                Draw_Grid();
-            }
-            else
-            {
                 Process_Grid_Iteration();
-                ITERATION_NUMBER++;
+                _iteration_number++;
                 Draw_Grid();
-            }
-            Console.WriteLine("Iteration Number: " + ITERATION_NUMBER);
+
+            Console.WriteLine("Iteration Number: " +_iteration_number);
         }
 
         private void Process_Grid_Iteration()
@@ -92,15 +86,15 @@ namespace Game_Of_Life
             
             for (int i = 0; i < _grid_size; i++)
             {
-                String s = "";
+
                 for (int j = 0; j < _grid_size; j++)
                 {
                     int y = Calculate_Cell_Neighbours(_cells[i, j]);
 
                     Determine_Cell_Action(temp_grid._cells[i, j], y);
-                    s += " " + y;
+
                 }
-                //Console.WriteLine(s);
+
             }
             this._cells = temp_grid._cells;
         }
