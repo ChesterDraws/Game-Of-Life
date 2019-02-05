@@ -62,23 +62,9 @@ namespace Game_Of_Life
         private static void Setup()
         {
             int start_pop;
-            int start_size;
 
-            Console.WriteLine("Welcome to the game of life!!\n" +
-                              "Please input the size of the grid: ");
 
-            String grid_size = Console.ReadLine();
-
-            while (!Int32.TryParse(grid_size, out start_size))
-            {
-                Console.WriteLine("Please enter a valid integer");
-                grid_size = Console.ReadLine();
-
-            }
-
-            Console.WriteLine("Please input the number of starting live cells.\n" +
-                              "(If this number is greater than the size of the grid times 2," +
-                              "the entire grid will be populated). ");
+            Console.WriteLine("Please input the number of starting live cells.\n");
 
             String start_population = Console.ReadLine();
 
@@ -88,7 +74,7 @@ namespace Game_Of_Life
                 start_population = Console.ReadLine();
             }
 
-            _grid = new Grid(start_size, start_pop);
+            _grid = new Grid(start_pop);
 
         }
 

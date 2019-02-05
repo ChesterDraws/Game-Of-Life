@@ -9,16 +9,18 @@ namespace Game_Of_Life
         private int _iteration_number;
         private Cell[,] _cells;
         private int _grid_size;
+        private static int GRID_SIZE = 40;
 
 
-        public Grid(int grid_size, int initial_live_cells)
+        public Grid(int initial_live_cells)
         {
 
-            _iteration_number = 0;
-            if (initial_live_cells > grid_size * grid_size)
-                initial_live_cells = grid_size * grid_size;
 
-            this._grid_size = grid_size;
+            _iteration_number = 0;
+            if (initial_live_cells > GRID_SIZE * GRID_SIZE)
+                initial_live_cells = GRID_SIZE * GRID_SIZE;
+
+            this._grid_size = GRID_SIZE;
             Create_Grid();
             Generate_Initial_Live_Cells(initial_live_cells);
 
@@ -72,18 +74,19 @@ namespace Game_Of_Life
         public void Iterate()
         {
             Console.Clear();
+            //Console.SetCursorPosition(Console.CursorLeft,Console.WindowTop + Console.WindowHeight -1);
 
-                Process_Grid_Iteration();
-                _iteration_number++;
-                Draw_Grid();
+            Process_Grid_Iteration();
+            _iteration_number++;
+            Draw_Grid();
 
-            Console.WriteLine("Iteration Number: " +_iteration_number);
+            Console.WriteLine("Iteration Number: " + _iteration_number);
         }
 
         private void Process_Grid_Iteration()
         {
             Grid temp_grid = Copy_Cells();
-            
+
             for (int i = 0; i < _grid_size; i++)
             {
 
@@ -101,7 +104,7 @@ namespace Game_Of_Life
 
         private Grid Copy_Cells()
         {
-            Grid temp = new Grid(this._grid_size,0);
+            Grid temp = new Grid(0);
 
             for (int i = 0; i < _grid_size; i++)
             {
@@ -135,7 +138,7 @@ namespace Game_Of_Life
                 {
                     if (InBounds(i, j))
                     {
-                        if (_cells[i, j].Is_Cell_Alive() && !_cells[i,j].Equals(cell))
+                        if (_cells[i, j].Is_Cell_Alive() && !_cells[i, j].Equals(cell))
                             neighbours++;
                     }
                 }
@@ -152,7 +155,7 @@ namespace Game_Of_Life
                 {
                     if (this._cells[i, j].Is_Cell_Alive())
                     {
-                        Console.Write("[*]");
+                        Console.Write("[+]");
                     }
                     else
                     {
@@ -166,7 +169,8 @@ namespace Game_Of_Life
 
         private void Determine_Cell_Action(Cell cell, int neighbours)
         {
-            switch(neighbours){
+            switch (neighbours)
+            {
 
                 case 0:
                 case 1:
@@ -182,7 +186,7 @@ namespace Game_Of_Life
                         cell.Set_Cell_To_Alive();
                     // Survival
                     break;
-                case var x when (neighbours > 3 ):
+                case var x when (neighbours > 3):
                     // Overcrowding
                     if (cell.Is_Cell_Alive())
                         cell.Set_Cell_To_Dead();
