@@ -4,8 +4,14 @@ using System.Text;
 
 namespace Game_Of_Life
 {
+
     class Grid
     {
+        private readonly static String ALIVE_CELL_STRING = "[\u2022]";
+        private readonly static String DEAD_CELL_STRING = "[ ]";
+
+
+
         private int _generation_number;
         private Cell[,] _cells;
         private int _grid_size;
@@ -177,11 +183,11 @@ namespace Game_Of_Life
                 {
                     if (this._cells[i, j].Is_Cell_Alive())
                     {
-                        sb.Append("[\u2022]");
+                        sb.Append(ALIVE_CELL_STRING);
                     }
                     else
                     {
-                        sb.Append("[ ]");
+                        sb.Append(DEAD_CELL_STRING);
 
                     }
                 }
