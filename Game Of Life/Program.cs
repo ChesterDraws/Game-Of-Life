@@ -10,8 +10,9 @@ namespace Game_Of_Life
 
         static void Main(string[] args)
         {
-            DisableConsoleQuickEdit.Go();
-  
+
+            Init();
+            Console.WriteLine("Welcome to my implementation of \"Game of Life\"!!!\n");
             bool pause = false;
             String user_input = "";
             Setup();
@@ -27,7 +28,8 @@ namespace Game_Of_Life
                     switch (user_input)
                     {
                         case "I":
-                            _grid.Iterate();
+                            Console.Clear();
+                            Console.WriteLine(_grid.Iterate_And_Return_State());
                             break;
                         case "R":
                             Setup();
@@ -45,8 +47,9 @@ namespace Game_Of_Life
                 }
                 else
                 {
-                    System.Threading.Thread.Sleep(400);
-                    _grid.Iterate();
+                    System.Threading.Thread.Sleep(500);
+                    Console.Clear();
+                    Console.WriteLine(_grid.Iterate_And_Return_State()) ;
                     Console.WriteLine("Press CTRL+C to Pause");
                 }
 
@@ -59,12 +62,23 @@ namespace Game_Of_Life
 
         }
 
+
+        private static void Init()
+        {
+            DisableConsoleQuickEdit.Go();
+            DisableConsoleQuickEdit.Maximize();
+
+        }
+
+        /// <summary>
+        /// Gets user input and resets the grid.
+        /// 
+        /// </summary>
         private static void Setup()
         {
             int start_pop;
 
-
-            Console.WriteLine("Please input the number of starting live cells.\n");
+            Console.WriteLine("Please input the number of starting live cells: ");
 
             String start_population = Console.ReadLine();
 
@@ -121,7 +135,7 @@ namespace Game_Of_Life
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(System.IntPtr hWnd, int cmdShow);
 
-        private static void Maximize()
+        internal static void Maximize()
         {
             Process p = Process.GetCurrentProcess();
             ShowWindow(p.MainWindowHandle, 3); //SW_MAXIMIZE = 3
@@ -129,7 +143,7 @@ namespace Game_Of_Life
 
         internal static bool Go()
         {
-            Maximize();
+ 
             IntPtr consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
 
             // get current console mode

@@ -6,7 +6,7 @@ namespace Game_Of_Life
 {
     class Grid
     {
-        private int _iteration_number;
+        private int _generation_number;
         private Cell[,] _cells;
         private int _grid_size;
         private static int GRID_SIZE = 40;
@@ -16,7 +16,7 @@ namespace Game_Of_Life
         {
 
 
-            _iteration_number = 0;
+            _generation_number = 0;
             if (initial_live_cells > GRID_SIZE * GRID_SIZE)
                 initial_live_cells = GRID_SIZE * GRID_SIZE;
 
@@ -27,14 +27,16 @@ namespace Game_Of_Life
 
         }
 
-
-        public void Iterate()
+        /// <summary>
+        /// Computes the next generation and returns the state of the grid in a string.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string Iterate_And_Return_State()
         {
-            Console.Clear();
             Process_Grid_Iteration();
-            _iteration_number++;
-            Console.WriteLine(Draw_Grid());
-            Console.WriteLine("Iteration Number: " + _iteration_number);
+            _generation_number++;
+            return Draw_Grid() + "\nGeneration Number: " + _generation_number;
         }
 
 
@@ -163,6 +165,7 @@ namespace Game_Of_Life
 
 
         /// <summary>
+        /// Returns a string of the current state of the grid.
         /// 
         /// </summary>
         private String Draw_Grid()
@@ -187,6 +190,13 @@ namespace Game_Of_Life
             return sb.ToString();
         }
 
+
+        /// <summary>
+        /// Switch statement to determine the action of the cell.
+        /// 
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="neighbours"></param>
         private void Determine_Cell_Action(Cell cell, int neighbours)
         {
             switch (neighbours)
@@ -204,6 +214,7 @@ namespace Game_Of_Life
                     // Creation of Life
                     if (!cell.Is_Cell_Alive())
                         cell.Set_Cell_To_Alive();
+
                     // Survival
                     break;
                 case var x when (neighbours > 3):
