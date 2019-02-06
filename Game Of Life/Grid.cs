@@ -177,7 +177,7 @@ namespace Game_Of_Life
                 {
                     if (this._cells[i, j].Is_Cell_Alive())
                     {
-                        sb.Append("[+]");
+                        sb.Append("[\u2022]");
                     }
                     else
                     {

@@ -54,6 +54,8 @@ namespace Game_Of_Life
 
         private static void Init()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             ConsoleHelperFunctions.Disable_Quick_Edit();
             
             ConsoleHelperFunctions.Maximize();
