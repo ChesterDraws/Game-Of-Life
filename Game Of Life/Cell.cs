@@ -7,7 +7,6 @@ namespace Game_Of_Life
     class Cell
     {
 
-        public int _num_neighbours { get; }
         private bool _alive;
 
         private int _x;
@@ -19,11 +18,6 @@ namespace Game_Of_Life
             _alive = alive;
             _x = x;
             _y = y;
-
-        }
-
-        public void Calculate_Neigbours()
-        {
 
         }
 
